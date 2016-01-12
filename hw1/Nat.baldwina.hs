@@ -34,13 +34,13 @@ four = Succ three
 
 
 -- | The predecessor of a natural number.
---   
+--
 --   >>> pred zero
 --   Zero
---   
+--
 --   >>> pred three
 --   Succ (Succ Zero)
--- 
+--
 pred :: Nat -> Nat
 pred Zero     = Zero
 pred (Succ x) = x
@@ -54,9 +54,9 @@ pred (Succ x) = x
 --   >>> isZero two
 --   False
 --
-isZero :: Nat -> Bool 
+isZero :: Nat -> Bool
 isZero Zero = True
-isZero _    = False 
+isZero _    = False
 
 
 -- | Convert a natural number to an integer.
@@ -85,7 +85,7 @@ toInt (Succ x) = 1 + toInt x
 --
 --   >>> add two three == add three two
 --   True
---   
+--
 add :: Nat -> Nat -> Nat
 add x Zero            = x
 add Zero y            = y
@@ -97,7 +97,7 @@ add (Succ x) (Succ y) = (Succ (Succ (add x y)))
 --
 --   >>> sub two one
 --   Succ Zero
---   
+--
 --   >>> sub three one
 --   Succ (Succ Zero)
 --
@@ -125,7 +125,7 @@ sub (Succ x) (Succ y) = sub x y
 --   False
 --
 gt :: Nat -> Nat -> Bool
-gt x y 
+gt x y
        | sub x y == Zero = False
        | otherwise       = True
 
@@ -156,7 +156,7 @@ mult (Succ x) y        = add y (mult x y)
 --
 --   >>> sum []
 --   Zero
---   
+--
 --   >>> sum [one,zero,two]
 --   Succ (Succ (Succ Zero))
 --
@@ -176,5 +176,4 @@ sum (x:t) = add x (sum t)
 --   >>> toInt (sum (take 100 odds))
 --   10000
 --
-
-odds = undefined
+odds = one : map (add two) odds
