@@ -42,7 +42,7 @@ four = Succ three
 --   Succ (Succ Zero)
 -- 
 pred :: Nat -> Nat
-pred Zero = Zero
+pred Zero     = Zero
 pred (Succ x) = x
 
 
@@ -68,7 +68,7 @@ isZero _    = False
 --   3
 --
 toInt :: Nat -> Int
-toInt Zero = 0
+toInt Zero     = 0
 toInt (Succ x) = 1 + toInt x
 
 
@@ -149,7 +149,7 @@ mult _ Zero            = Zero
 mult Zero _            = Zero
 mult (Succ Zero) y     = y
 mult x (Succ Zero)     = x
-mult (Succ x) y = mult (x) (add y y)
+mult (Succ x) y        = add y (mult x y)
 
 
 -- | Compute the sum of a list of natural numbers.
