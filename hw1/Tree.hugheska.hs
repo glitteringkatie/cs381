@@ -85,11 +85,9 @@ rightmost (Node _ _ r) = rightmost r
 --   >>> maxInt t2
 --   9
 --
-maxInt :: Tree -> Int -> Int
-maxInt (Node x l r) max = 
---look at max and x and return largest
---maxInt with left most
---maxInt with right most
+maxInt :: Tree -> Int
+maxInt = undefined
+
 
 -- | Get the minimum integer from a binary tree.
 --

@@ -42,12 +42,8 @@ four = Succ three
 --   Succ (Succ Zero)
 --
 pred :: Nat -> Nat
-pred zero = Zero
-pred one = zero
-pred two = one
-pred three = two
-pred four = three
-pred _ = error "Undefined"
+pred Zero = Zero
+pred (Succ x) = x
 
 -- | True if the given value is zero.
 --
@@ -57,7 +53,9 @@ pred _ = error "Undefined"
 --   >>> isZero two
 --   False
 --
-isZero = undefined
+isZero :: Nat -> Bool
+isZero Zero = False
+isZero (Succ _) = True
 
 
 -- | Convert a natural number to an integer.
@@ -68,7 +66,8 @@ isZero = undefined
 --   >>> toInt three
 --   3
 --
-toInt = undefined
+toInt :: Nat -> Int -> Int
+toInt Zero x = 0
 
 
 -- | Add two natural numbers.
