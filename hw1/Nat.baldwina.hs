@@ -177,4 +177,6 @@ sum (x:t) = add x (sum t)
 --   10000
 --
 
-odds = undefined
+--odds :: Nat -> [Nat] 
+odds = one : map add two odds
+
