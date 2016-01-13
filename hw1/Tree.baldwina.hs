@@ -150,8 +150,10 @@ sumInts (Node x l r) = x + sumInts l + sumInts r
 --
 --   >>> preorder t2
 --   [6,2,1,4,3,5,8,7,9]
---   
-preorder = undefined
+--  
+preorder :: Tree -> [Int] 
+preorder (Leaf i)     = [i]
+preorder (Node x l r) = [x] ++ preorder l ++ preorder r
 
 
 -- | The list of integers encountered by an in-order traversal of the tree.
@@ -168,7 +170,9 @@ preorder = undefined
 --   >>> inorder t2
 --   [1,2,3,4,5,6,7,8,9]
 --   
-inorder = undefined
+inorder :: Tree -> [Int]
+inorder (Leaf i)     = [i]
+inorder (Node x l r) = inorder l ++ [x] ++ inorder r
 
 
 -- | Check whether a binary tree is a binary search tree.
