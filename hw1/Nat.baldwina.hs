@@ -1,3 +1,7 @@
+-- Andrea Baldwin
+-- Katie Hughes
+-- Mikky Cecil
+
 module Nat where
 
 import Prelude hiding (Enum(..), sum)

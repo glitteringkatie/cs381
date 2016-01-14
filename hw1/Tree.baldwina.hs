@@ -1,3 +1,7 @@
+-- Andrea Baldwin
+-- Katie Hughes
+-- Mikky Cecil
+
 module Tree where
 
 
