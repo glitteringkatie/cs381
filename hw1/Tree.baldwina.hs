@@ -30,7 +30,7 @@ t2 = Node 6 (Node 2 (Leaf 1) (Node 4 (Leaf 3) (Leaf 5)))
 --
 --   >>> leftmost (Node 5 (Leaf 6) (Leaf 7))
 --   6
---   
+--
 --   >>> leftmost t1
 --   4
 --
@@ -49,7 +49,7 @@ leftmost (Node _ l _) = leftmost l
 --
 --   >>> rightmost (Node 5 (Leaf 6) (Leaf 7))
 --   7
---   
+--
 --   >>> rightmost t1
 --   9
 --
@@ -86,7 +86,7 @@ maxInt (Node x l r) =
                           then maxInt l
                           else if maxInt r > maxInt l && maxInt r > x
                                then maxInt r
-                               else x 
+                               else x
 
 
 
@@ -115,7 +115,7 @@ minInt (Node x l r) =
                           then minInt l
                           else if minInt r < minInt l && minInt r < x
                                then minInt r
-                               else x 
+                               else x
 
 
 -- | Get the sum of the integers in a binary tree.
@@ -150,8 +150,8 @@ sumInts (Node x l r) = x + sumInts l + sumInts r
 --
 --   >>> preorder t2
 --   [6,2,1,4,3,5,8,7,9]
---  
-preorder :: Tree -> [Int] 
+--
+preorder :: Tree -> [Int]
 preorder (Leaf i)     = [i]
 preorder (Node x l r) = [x] ++ preorder l ++ preorder r
 
@@ -169,7 +169,7 @@ preorder (Node x l r) = [x] ++ preorder l ++ preorder r
 --
 --   >>> inorder t2
 --   [1,2,3,4,5,6,7,8,9]
---   
+--
 inorder :: Tree -> [Int]
 inorder (Leaf i)     = [i]
 inorder (Node x l r) = inorder l ++ [x] ++ inorder r
@@ -182,15 +182,27 @@ inorder (Node x l r) = inorder l ++ [x] ++ inorder r
 --
 --   >>> isBST (Node 5 (Leaf 6) (Leaf 7))
 --   False
---   
+--
 --   >>> isBST t1
 --   False
 --
 --   >>> isBST t2
 --   True
---   
+--
 isBST :: Tree -> Bool
-isBST = undefined
+isBST (Leaf i)                                     = True
+isBST (Node x (Leaf l) (Leaf r))                   = if l <= x && x <= r
+                                                         then True
+                                                         else False
+isBST (Node x ls@(Node l ll lr) (Leaf r))          = if l <= x && x <= r
+                                                         then isBST ls
+                                                         else False
+isBST (Node x (Leaf l) rs@(Node r rl rr))          = if l <= x && x <= r
+                                                         then isBST rs
+                                                         else False
+isBST (Node x ls@(Node l ll lr) rs@(Node r rl rr)) = if l <= x && x <= r
+                                                         then (isBST ls) && (isBST rs)
+                                                         else False
 
 
 -- | Check whether a number is contained in a binary search tree.
@@ -207,7 +219,7 @@ isBST = undefined
 --
 --   >>> inBST 10 t2
 --   False
---  
+--
 inBST :: Int -> Tree -> Bool
 inBST x t = (elem (x) (inorder t))
 
