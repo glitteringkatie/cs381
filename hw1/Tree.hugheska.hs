@@ -62,7 +62,7 @@ leftmost (Node _ l _) = leftmost l
 --
 rightmost :: Tree -> Int
 rightmost (Leaf i)     = i
-rightmost (Node _ _ r) = leftmost r
+rightmost (Node _ _ r) = rightmost r
 
 
 
