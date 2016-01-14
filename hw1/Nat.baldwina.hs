@@ -176,4 +176,5 @@ sum (x:t) = add x (sum t)
 --   >>> toInt (sum (take 100 odds))
 --   10000
 --
+odds :: [Nat]
 odds = one : map (add two) odds
