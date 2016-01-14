@@ -82,11 +82,11 @@ rightmost (Node _ _ r) = leftmost r
 maxInt :: Tree -> Int
 maxInt (Leaf i)     = i
 maxInt (Node x l r) =
-                   if maxInt l > maxInt r && maxInt l > x
-                       then maxInt l
-                       else if maxInt r > maxInt l && maxInt r > x
-                            then maxInt r
-                            else x 
+                      if maxInt l > maxInt r && maxInt l > x
+                          then maxInt l
+                          else if maxInt r > maxInt l && maxInt r > x
+                               then maxInt r
+                               else x 
 
 
 
@@ -111,11 +111,11 @@ maxInt (Node x l r) =
 minInt :: Tree -> Int
 minInt (Leaf i)     = i
 minInt (Node x l r) =
-                   if minInt l < minInt r && minInt l < x
-                       then minInt l
-                       else if minInt r < minInt l && minInt r < x
-                            then minInt r
-                            else x 
+                      if minInt l < minInt r && minInt l < x
+                          then minInt l
+                          else if minInt r < minInt l && minInt r < x
+                               then minInt r
+                               else x 
 
 
 -- | Get the sum of the integers in a binary tree.
@@ -189,6 +189,7 @@ inorder (Node x l r) = inorder l ++ [x] ++ inorder r
 --   >>> isBST t2
 --   True
 --   
+isBST :: Tree -> Bool
 isBST = undefined
 
 
@@ -206,5 +207,9 @@ isBST = undefined
 --
 --   >>> inBST 10 t2
 --   False
---   
-inBST = undefined
+--  
+inBST :: Int -> Tree -> Bool
+inBST x t = (elem (x) (inorder t))
+
+
+
