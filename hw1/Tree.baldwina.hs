@@ -191,18 +191,10 @@ inorder (Node x l r) = inorder l ++ [x] ++ inorder r
 --
 isBST :: Tree -> Bool
 isBST (Leaf i)                                     = True
-isBST (Node x (Leaf l) (Leaf r))                   = if l <= x && x <= r
-                                                         then True
-                                                         else False
-isBST (Node x ls@(Node l ll lr) (Leaf r))          = if l <= x && x <= r
-                                                         then isBST ls
-                                                         else False
-isBST (Node x (Leaf l) rs@(Node r rl rr))          = if l <= x && x <= r
-                                                         then isBST rs
-                                                         else False
-isBST (Node x ls@(Node l ll lr) rs@(Node r rl rr)) = if l <= x && x <= r
-                                                         then (isBST ls) && (isBST rs)
-                                                         else False
+isBST (Node x (Leaf l) (Leaf r))                   = l <= x && x <= r
+isBST (Node x ls@(Node l ll lr) (Leaf r))          = l <= x && x <= r && (isBST ls)
+isBST (Node x (Leaf l) rs@(Node r rl rr))          = l <= x && x <= r && (isBST rs)
+isBST (Node x ls@(Node l ll lr) rs@(Node r rl rr)) = l <= x && x <= r && (isBST ls) && (isBST rs)
 
 
 -- | Check whether a number is contained in a binary search tree.
