@@ -21,12 +21,13 @@ type Prog  = [Cmd] -- sequence of cmd
 data Mode = Up | Down
      deriving (Eq, Show)
 
-data Expr = Var
-          | Num
-          | Expr Expr
-     deriving Show
+data Expr = Ref Var
+          | LitN Num
+          | Plus Expr Expr
+     deriving (Eq, Show)
 
 data Cmd  = Pen Mode
           | Move Expr Expr
-          | Define Macro Var Prog
-     deriving Show
+          | Define Macro [Var] Prog
+          | Call Macro [Expr]
+     deriving (Eq, Show)
