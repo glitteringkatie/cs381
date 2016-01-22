@@ -16,7 +16,7 @@ import Prelude hiding (Num)
 type Num   = Int
 type Var   = String
 type Macro = String
-type Prog  = [Cmd] -- sequence of cmd
+type Prog  = [Cmd]
 
 data Mode = Up | Down
      deriving (Eq, Show)
@@ -31,3 +31,33 @@ data Cmd  = Pen Mode
           | Define Macro [Var] Prog
           | Call Macro [Expr]
      deriving (Eq, Show)
+
+
+
+-- define line (x1, y1, x2, y2) {
+--     pen up;
+--     move (x1, y1);
+--     pen down;
+--     move (x2, y2);
+--     pen up;
+-- }
+line = Define "line" ["x1","y1","x2","y2"] [
+    Pen Up,
+    Move (Ref "x1") (Ref "y1"),
+    Pen Down,
+    Move (Ref "x2") (Ref "y2"),
+    Pen Up]
+
+-- define nix (x, y, w, h) {
+--     line(x, y, (x+w), (y+h));
+--     line(x, (y+h), (x+w), y);
+-- }
+nix = Define "nix" ["x","y","w","h"] [
+    Call "line" [Ref "x",
+               Ref "y",
+               (Ref "x") `Plus` (Ref "w"),
+               (Ref "y") `Plus` (Ref "h")],
+    Call "line" [Ref "x",
+               (Ref "y") `Plus` (Ref "h"),
+               (Ref "x") `Plus` (Ref "w"),
+               Ref "y"] ]
