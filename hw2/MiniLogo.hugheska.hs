@@ -31,3 +31,14 @@ data Cmd  = Pen Mode
           | Define Macro [Var] Prog
           | Call Macro [Expr]
      deriving (Eq, Show)
+
+--line = define "line" (x,y,j,k){
+--    pen up; move (x,y);
+--    pen down; move (j,k);
+--}
+
+--nix = define "nix" (x,y,h,w){
+--	line(x,y,x+w,y+h); 
+--	line(x+w,y,x,y+h);
+--}
+
