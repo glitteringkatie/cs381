@@ -41,6 +41,8 @@ data Cmd  = Pen Mode
 --     move (x2, y2);
 --     pen up;
 -- }
+
+line :: Cmd
 line = Define "line" ["x1","y1","x2","y2"] [
     Pen Up,
     Move (Ref "x1") (Ref "y1"),
@@ -52,6 +54,8 @@ line = Define "line" ["x1","y1","x2","y2"] [
 --     line(x, y, (x+w), (y+h));
 --     line(x, (y+h), (x+w), y);
 -- }
+
+nix :: Cmd
 nix = Define "nix" ["x","y","w","h"] [
     Call "line" [Ref "x",
                Ref "y",
@@ -68,7 +72,6 @@ steps x = steps (x - 1) ++ [Call "line" [LitN x, LitN x, LitN (x - 1), LitN x],
           Call "line" [LitN (x - 1), LitN x, LitN (x - 1), LitN (x - 1)]]
 
 --macros :: Prog -> [Macro]
-
 
 
 
