@@ -63,16 +63,12 @@ nix = Define "nix" ["x","y","w","h"] [
                Ref "y"] ]
 
 steps :: Int -> Prog
-    steps 0 = 0
-    steps x = Call "line" [Ref "x"]
-                          [Ref "x"]
-                          [Ref "x" - 1]
-                          [Ref "x"]
-              Call "line" [Ref "x" - 1]
-                          [Ref "x"]
-                          [Ref "x" - 1]
-                          [Ref "x" - 1]
-                           steps (x - 1)
+steps 0 = []
+steps x = steps (x - 1) ++ [Call "line" [LitN x, LitN x, LitN (x - 1), LitN x],
+          Call "line" [LitN (x - 1), LitN x, LitN (x - 1), LitN (x - 1)]]
+
+--macros :: Prog -> [Macro]
+
 
 
 
