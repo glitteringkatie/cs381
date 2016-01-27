@@ -62,3 +62,17 @@ nix = Define "nix" ["x","y","w","h"] [
                (Ref "x") `Plus` (Ref "w"),
                Ref "y"] ]
 
+steps :: Int -> Prog
+    steps 0 = 0
+    steps x = Call "line" [Ref "x"]
+                          [Ref "x"]
+                          [Ref "x - 1"]
+                          [Ref "x"]
+                           steps (x - 1)
+
+
+
+
+
+
+
