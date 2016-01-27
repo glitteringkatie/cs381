@@ -76,7 +76,14 @@ macros [] = []
 macros ((Define m _ _):xs) = m:(macros xs)
 
 
-
-
-
-
+{-data Cmd  = Pen Mode-}
+          {-| Move Expr Expr-}
+          {-| Define Macro [Var] Prog-}
+          {-| Call Macro [Expr]-}
+     {-deriving (Eq, Show)-}
+pretty :: Prog -> String
+pretty [] = []
+pretty ((Pen m):xs) = "pen " ++ m ++ ";"
+pretty ((Move ex1 ex2):xs) = "pen " ++ m ++ ";"
+pretty ((Define m vs p):xs) = "pen " ++ m ++ ";"
+pretty ((Call m exs):xs) = "pen " ++ m ++ ";"
