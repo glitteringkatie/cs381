@@ -66,8 +66,12 @@ steps :: Int -> Prog
     steps 0 = 0
     steps x = Call "line" [Ref "x"]
                           [Ref "x"]
-                          [Ref "x - 1"]
+                          [Ref "x" - 1]
                           [Ref "x"]
+              Call "line" [Ref "x" - 1]
+                          [Ref "x"]
+                          [Ref "x" - 1]
+                          [Ref "x" - 1]
                            steps (x - 1)
 
 
