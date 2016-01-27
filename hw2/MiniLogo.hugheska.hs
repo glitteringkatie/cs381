@@ -71,7 +71,7 @@ steps 0 = []
 steps x = steps (x - 1) ++ [Call "line" [LitN x, LitN x, LitN (x - 1), LitN x],
           Call "line" [LitN (x - 1), LitN x, LitN (x - 1), LitN (x - 1)]]
 
---macros :: Prog -> [Macro]
+macros :: Prog -> [Macro]
 macros [] = []
 macros ((Define m _ _):xs) = m:(macros xs)
 
