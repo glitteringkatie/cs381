@@ -1,3 +1,8 @@
+-- Katie  Hughes
+-- Andrea Baldwin
+-- Mikky  Cecil
+
+
 -- num   ::= any natural number               -> This can be num or int
 -- var   ::= any variable name                -> This can be a string
 -- macro ::= any macro name
