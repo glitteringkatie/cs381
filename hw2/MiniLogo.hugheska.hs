@@ -86,8 +86,8 @@ pretty [] = []
 pretty ((Pen Up):xs) = "pen up;" ++ pretty xs
 pretty ((Pen Down):xs) = "pen down;" ++ pretty xs
 pretty ((Move ex1 ex2):xs) = "move (" ++ prettyExpr ex1 ++ "," ++ prettyExpr ex2 ++ ");" ++ pretty xs
-pretty ((Define m vs p):xs) = "define " ++ m ++ "(" ++ arrayToString vs ++ ") {" ++ pretty p ++ pretty xs
-pretty ((Call m exs):xs) = "call " ++ m ++ "(" ++ arrayToString xs ++ ");" ++ pretty xs
+pretty ((Define m vs p):xs) = "define " ++ m ++ "(" ++ varsToString vs ++ ") {" ++ pretty p ++ pretty xs
+pretty ((Call m exs):xs) = "call " ++ m ++ "(" ++ arrayToString exs ++ ");" ++ pretty xs
 
 {-data Expr = Ref Var-}
           {-| LitN Num-}
@@ -98,6 +98,10 @@ prettyExpr (Ref x)  = show x
 prettyExpr (LitN x) = show x
 prettyExpr (Plus x y) = prettyExpr x ++ "+" ++ prettyExpr y
 
-arrayToString :: [String] -> String
+arrayToString :: [Expr] -> String
 arrayToString [] = ""
-arrayToString (x:xs) = show x ++ "," ++ arrayToString xs
+arrayToString (x:xs) = prettyExpr x ++ "," ++ arrayToString xs
+
+varsToString :: [Var] -> String
+varsToString [] = ""
+varsToString (v:xs) = show v ++ "," ++ varsToString xs
