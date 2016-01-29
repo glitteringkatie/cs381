@@ -76,6 +76,8 @@ macros [] = []
 macros ((Define m _ _):xs) = m:(macros xs)
 
 
+
+tab = "    "
 {-data Cmd  = Pen Mode-}
           {-| Move Expr Expr-}
           {-| Define Macro [Var] Prog-}
@@ -83,19 +85,19 @@ macros ((Define m _ _):xs) = m:(macros xs)
      {-deriving (Eq, Show)-}
 pretty :: Prog -> String
 pretty [] = []
-pretty ((Pen Up):xs) = "pen up;\n" ++ pretty xs
-pretty ((Pen Down):xs) = "pen down;\n" ++ pretty xs
-pretty ((Move ex1 ex2):xs) = "move (" ++ prettyExpr ex1 ++ "," ++ prettyExpr ex2 ++ ");\n" ++ pretty xs
+pretty ((Pen Up):xs)        = tab ++ "pen up;\n" ++ pretty xs
+pretty ((Pen Down):xs)      = tab ++ "pen down;\n" ++ pretty xs
+pretty ((Move ex1 ex2):xs)  = tab ++ "move (" ++ prettyExpr ex1 ++ "," ++ prettyExpr ex2 ++ ");\n" ++ pretty xs
 pretty ((Define m vs p):xs) = "define " ++ m ++ "(" ++ varsToString vs ++ ") {\n" ++ pretty p ++ "}\n" ++ pretty xs
-pretty ((Call m exs):xs) = "call " ++ m ++ "(" ++ arrayToString exs ++ ");\n" ++ pretty xs
+pretty ((Call m exs):xs)    = tab ++ "call " ++ m ++ "(" ++ arrayToString exs ++ ");\n" ++ pretty xs
 
 {-data Expr = Ref Var-}
           {-| LitN Num-}
           {-| Plus Expr Expr-}
      {-deriving (Eq, Show)-}
 prettyExpr :: Expr -> String
-prettyExpr (Ref x)  = show x
-prettyExpr (LitN x) = show x
+prettyExpr (Ref x)    = x
+prettyExpr (LitN x)   = show x
 prettyExpr (Plus x y) = prettyExpr x ++ "+" ++ prettyExpr y
 
 arrayToString :: [Expr] -> String
@@ -105,5 +107,5 @@ arrayToString (x:xs) = prettyExpr x ++ "," ++ arrayToString xs
 
 varsToString :: [Var] -> String
 varsToString []     = ""
-varsToString [v]    = show v
-varsToString (v:xs) = show v ++ "," ++ varsToString xs
+varsToString [v]    = v
+varsToString (v:xs) = v ++ "," ++ varsToString xs
