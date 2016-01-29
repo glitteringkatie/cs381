@@ -99,9 +99,11 @@ prettyExpr (LitN x) = show x
 prettyExpr (Plus x y) = prettyExpr x ++ "+" ++ prettyExpr y
 
 arrayToString :: [Expr] -> String
-arrayToString [] = ""
+arrayToString []     = ""
+arrayToString [x]    = prettyExpr x
 arrayToString (x:xs) = prettyExpr x ++ "," ++ arrayToString xs
 
 varsToString :: [Var] -> String
-varsToString [] = ""
+varsToString []     = ""
+varsToString [v]    = show v
 varsToString (v:xs) = show v ++ "," ++ varsToString xs
