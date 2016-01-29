@@ -83,11 +83,11 @@ macros ((Define m _ _):xs) = m:(macros xs)
      {-deriving (Eq, Show)-}
 pretty :: Prog -> String
 pretty [] = []
-pretty ((Pen Up):xs) = "pen up;" ++ pretty xs
-pretty ((Pen Down):xs) = "pen down;" ++ pretty xs
-pretty ((Move ex1 ex2):xs) = "move (" ++ prettyExpr ex1 ++ "," ++ prettyExpr ex2 ++ ");" ++ pretty xs
-pretty ((Define m vs p):xs) = "define " ++ m ++ "(" ++ varsToString vs ++ ") {" ++ pretty p ++ pretty xs
-pretty ((Call m exs):xs) = "call " ++ m ++ "(" ++ arrayToString exs ++ ");" ++ pretty xs
+pretty ((Pen Up):xs) = "pen up;\n" ++ pretty xs
+pretty ((Pen Down):xs) = "pen down;\n" ++ pretty xs
+pretty ((Move ex1 ex2):xs) = "move (" ++ prettyExpr ex1 ++ "," ++ prettyExpr ex2 ++ ");\n" ++ pretty xs
+pretty ((Define m vs p):xs) = "define " ++ m ++ "(" ++ varsToString vs ++ ") {\n" ++ pretty p ++ "}\n" ++ pretty xs
+pretty ((Call m exs):xs) = "call " ++ m ++ "(" ++ arrayToString exs ++ ");\n" ++ pretty xs
 
 {-data Expr = Ref Var-}
           {-| LitN Num-}
