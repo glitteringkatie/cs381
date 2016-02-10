@@ -50,8 +50,11 @@ draw p = let (_,ls) = prog p start in toHTML ls
 --   ((Down,(4,5)),Just ((2,3),(4,5)))
 --
 cmd :: Cmd -> State -> (State, Maybe Line)
-cmd (Pen i)    (m, p)     = (i,p)
-cmd (Move i j) (m, (x,y)) =
+cmd (Pen i)    (m, p)     = ((i,p), Nothing)
+cmd (Move i j) (m, (x,y)) = case m of
+	                          Up   -> ((m, (x+i, y+j)), Nothing)
+	                          Down -> ((m, (x+i, y+j)), Just ((x, y), (x+i, y+j)))
+
 -- change state's mode to up or down and what about the maybe line? something
 --    with p probably -> line if down?
 -- move won't adjust m but it will adjust the point and will return a line if
@@ -67,7 +70,17 @@ cmd (Move i j) (m, (x,y)) =
 --   ((Down,(2,2)),[((0,0),(0,1)),((0,1),(1,1)),((1,1),(1,2)),((1,2),(2,2))])
 prog :: Prog -> State -> (State, [Line])
 prog []     s = (s,[])
-prog (p:ps) s = move ps (cmd s p)
+--prog (p:ps) s = move ps (cmd s p)
+--prog (p:ps) s = prog (cmd s p)
+--prog (p:ps) s = (cmd s p) : prog (newstate)
+-- NOTE: We want something like below. But below obviously doesn't work. :P
+prog (p:ps) s = let (newstate, ml) = (cmd p s) in 
+                  case ml of
+                  	Just l  -> [l] ++ prog ps newstate
+                  	Nothing -> [] ++ prog ps newstate
+--Prog -> State -> (State, [Line])
+--Cmd -> State -> (State, Maybe Line)
+--		 Prog -> State -> (State, [Line])
 
 
 --
