@@ -52,8 +52,8 @@ draw p = let (_,ls) = prog p start in toHTML ls
 cmd :: Cmd -> State -> (State, Maybe Line)
 cmd (Pen i)    (m, p)     = ((i,p), Nothing)
 cmd (Move i j) (m, (x,y)) = case m of
-	                          Up   -> ((m, (x+i, y+j)), Nothing)
-	                          Down -> ((m, (x+i, y+j)), Just ((x, y), (x+i, y+j)))
+	                          Up   -> ((m, (i, j)), Nothing)
+	                          Down -> ((m, (i, j)), Just ((x, y), (i, j)))
 
 -- change state's mode to up or down and what about the maybe line? something
 --    with p probably -> line if down?
