@@ -80,6 +80,8 @@ prog (p:ps) s = let res = (cmd p s); line = snd res; state = fst res in
 
 -- | This should be a MiniMiniLogo program that draws an amazing picture.
 --   Add as many helper functions as you want.
+
+-- source: http://duggie.weebly.com/uploads/3/7/3/0/3730287/coord_lists.pdf
 amazing :: Prog
 amazing = [Pen Up, Move 14 24, Pen Down, Move 22 26, Move 23 26,
               Move 21 25, Move 21 24, Move 22 24, Move 21 23,
