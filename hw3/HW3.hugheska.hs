@@ -97,7 +97,3 @@ amazing = [(Pen Up, Move (14,24), Pen Down, Move (22,26), Move (23,26),
               Move (13,32), Move (13,31), Move (14,31), Move (13,30),
               Move (13,29), Move (14,30), Move (15,29), Move (15,27),
               Move (14,26), Move (13,27), Move (13,25)]
-
-
-
-
