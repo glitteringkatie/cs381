@@ -68,17 +68,15 @@ cmd (Move i j) (m, (x,y)) = case m of
 --
 --   >>> prog (steps 2 0 0) start
 --   ((Down,(2,2)),[((0,0),(0,1)),((0,1),(1,1)),((1,1),(1,2)),((1,2),(2,2))])
+addLine :: (State, [Line]) -> Line -> (State, [Line])
+addLine (s, l) newl = (s, newl:l)
+
 prog :: Prog -> State -> (State, [Line])
 prog []     s = (s,[])
---prog (p:ps) s = prog ps (cmd s p)
---prog (p:ps) s = prog (cmd s p)
---prog (p:ps) s = (cmd s p) : prog (newstate)
 -- NOTE: We want something like below. But below obviously doesn't work. :P
 prog (p:ps) s = let res = (cmd p s) in 
                   case snd res of
-                  	--Just l  -> ((fst res), [l] ++ snd (prog ps (fst res)))
-                  	Just l  -> prog ps (fst res)
-                  	--Nothing -> ((fst res), []  ++ snd (prog ps (fst res)))
+                  	Just l  -> addLine (prog ps (fst res)) l
                   	Nothing -> prog ps (fst res)
 --Prog -> State -> (State, [Line])
 --Cmd -> State -> (State, Maybe Line)
