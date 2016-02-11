@@ -52,13 +52,8 @@ draw p = let (_,ls) = prog p start in toHTML ls
 cmd :: Cmd -> State -> (State, Maybe Line)
 cmd (Pen i)    (m, p)     = ((i,p), Nothing)
 cmd (Move i j) (m, (x,y)) = case m of
-                            Up   -> ((m, (i, j)), Nothing)
-                            Down -> ((m, (i, j)), Just ((x, y), (i, j)))
-
--- change state's mode to up or down and what about the maybe line? something
---    with p probably -> line if down?
--- move won't adjust m but it will adjust the point and will return a line if
---    p is down otherwise probably nothing
+                              Up   -> ((m, (i, j)), Nothing)
+                              Down -> ((m, (i, j)), Just ((x, y), (i, j)))
 
 
 -- | Semantic function for Prog.
@@ -73,7 +68,7 @@ addLine (s, l) newl = (s, newl:l)
 
 prog :: Prog -> State -> (State, [Line])
 prog []     s = (s,[])
-prog (p:ps) s = let res = (cmd p s); line = snd res; state = fst res in 
+prog (p:ps) s = let res = (cmd p s); line = snd res; state = fst res in
                   case line of
                     Just l  -> addLine (prog ps state) l
                     Nothing -> prog ps state
