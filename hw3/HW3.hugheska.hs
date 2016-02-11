@@ -1,3 +1,6 @@
+-- Katie  Hughes
+-- Andrea Baldwin
+-- Mikky  Cecil
 module HW3 where
 
 import MiniMiniLogo
