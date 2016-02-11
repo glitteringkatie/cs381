@@ -74,10 +74,10 @@ addLine (s, l) newl = (s, newl:l)
 prog :: Prog -> State -> (State, [Line])
 prog []     s = (s,[])
 -- NOTE: We want something like below. But below obviously doesn't work. :P
-prog (p:ps) s = let res = (cmd p s) in 
-                  case snd res of
-                    Just l  -> addLine (prog ps (fst res)) l
-                    Nothing -> prog ps (fst res)
+prog (p:ps) s = let res = (cmd p s); line = snd res; state = fst res in 
+                  case line of
+                    Just l  -> addLine (prog ps state) l
+                    Nothing -> prog ps state
 --Prog -> State -> (State, [Line])
 --Cmd -> State -> (State, Maybe Line)
 --     Prog -> State -> (State, [Line])
