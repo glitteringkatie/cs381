@@ -9,7 +9,11 @@ import KarelState
 
 -- | Valuation function for Test.
 test :: Test -> World -> Robot -> Bool
-test = undefined
+test (Not t)    w r = not (test t w r)
+test (Facing c) _ r = getFacing r == c
+test (Clear d)  w r = isClear (relativePos d r) w
+test Beeper     w r = hasBeeper (getPos r) w
+test Empty      _ r = isEmpty r
 
 -- | Valuation function for Stmt.
 stmt :: Stmt -> Defs -> World -> Robot -> Result
@@ -39,7 +43,7 @@ stmts (s:ss) d w r = case stmt s d w r of
                        OK  nw nr -> stmts ss d nw nr
                        Done   nr -> Done nr
                        Error  s  -> Error s
-    
+
 -- | Run a Karel program.
 prog :: Prog -> World -> Robot -> Result
 prog (m,s) w r = stmt s m w r
