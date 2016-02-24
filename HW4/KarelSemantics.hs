@@ -38,6 +38,9 @@ stmt (Block ss) d w r = stmts ss d w r
 stmt (If c x y) d w r = if test c w r == True 
                         then stmt x d w r
                         else stmt y d w r
+stmt (Call m)   d w r = case lookup m d of
+                          Just s  -> stmt s d w r
+                          Nothing -> Error ("Undefined macro: " ++ m)
 stmt _ _ _ _ = undefined
 
 stmts :: [Stmt] -> Defs -> World -> Robot -> Result
