@@ -28,19 +28,25 @@ stmt PickBeeper _ w r = let p = getPos r
                               else Error ("No beeper to pick at: " ++ show p)
 --Note: there can be more than one beeper in a spot.
 --We don't need to check if it's a wall because the robot can't walk to a wall spot.
-stmt PutBeeper  _ w r = let p = getPos r
-                        in case isEmpty r of
-                             True  -> Error ("No beeper to put.")
-                             False -> OK (incBeeper p w) (decBag r)
-stmt (Turn d)   _ w r = let f = getFacing r
-                        in OK w (setFacing (cardTurn d f) r)
-stmt (Block ss) d w r = stmts ss d w r
-stmt (If c x y) d w r = if test c w r == True 
-                        then stmt x d w r
-                        else stmt y d w r
-stmt (Call m)   d w r = case lookup m d of
-                          Just s  -> stmt s d w r
-                          Nothing -> Error ("Undefined macro: " ++ m)
+stmt PutBeeper     _ w r = let p = getPos r
+                           in case isEmpty r of
+                                True  -> Error ("No beeper to put.")
+                                False -> OK (incBeeper p w) (decBag r)
+stmt (Turn d)      _ w r = let f = getFacing r
+                           in OK w (setFacing (cardTurn d f) r)
+stmt (Block ss)    d w r = stmts ss d w r
+stmt (If c x y)    d w r = if test c w r == True 
+                           then stmt x d w r
+                           else stmt y d w r
+stmt (Call m)      d w r = case lookup m d of
+                             Just s  -> stmt s d w r
+                             Nothing -> Error ("Undefined macro: " ++ m)
+stmt (Iterate i s) d w r = if i > 0 
+                           then case stmt s d w r of
+                                  OK nw nr -> stmt (Iterate (i - 1) s) d nw nr
+                                  Done  nr -> Done nr
+                                  Error s  -> Error s
+                           else OK w r
 stmt _ _ _ _ = undefined
 
 stmts :: [Stmt] -> Defs -> World -> Robot -> Result
