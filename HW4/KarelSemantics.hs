@@ -21,7 +21,7 @@ stmt Shutdown   _ _ r = Done r
 stmt Move       _ w r = let f = getFacing r; p = getPos r; n = (neighbor f p)
                         in case isClear n w of
                              True  -> OK w (setPos n r)
-                             False -> Error ("Blocked at:" ++ show p)
+                             False -> Error ("Blocked at: " ++ show p)
 stmt PickBeeper _ w r = let p = getPos r
                         in if hasBeeper p w
                               then OK (decBeeper p w) (incBag r)
