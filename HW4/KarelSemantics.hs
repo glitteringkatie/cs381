@@ -41,6 +41,10 @@ stmt (If c x y) d w r = if test c w r == True
 stmt (Call m)   d w r = case lookup m d of
                           Just s  -> stmt s d w r
                           Nothing -> Error ("Undefined macro: " ++ m)
+
+stmt (While c x) d w r = if test c w r == True 
+                         then (stmt x d w r) (stmt (c, x) d w r)
+                         else OK w r
 stmt _ _ _ _ = undefined
 
 stmts :: [Stmt] -> Defs -> World -> Robot -> Result
