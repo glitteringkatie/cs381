@@ -45,15 +45,19 @@ stmt (If c x y) d w r = if test c w r == True
 stmt (Call m)   d w r = case lookup m d of
                           Just s  -> stmt s d w r
                           Nothing -> Error ("Undefined macro: " ++ m)
-
 stmt (While c x) d w r = if test c w r == True 
-                         then (stmt x d w r) (stmt (c, x) d w r)
+                         then case stmt x d w r of
+                           OK nw nr -> stmt (While c x) d nw nr
+                           Done  nr -> Done nr
+                           Error s  -> Error s
                          else OK w r
 stmt (Iterate i s) d w r = if i > 0
                            then case stmt s d w r of
-                             OK nw nr -> stmt (Iterate (i - 1) s) d nw nr
-                             Done  nr -> Done nr
-                             Error s  -> Error s
+                                  OK nw nr -> stmt (Iterate (i - 1) s) d nw nr
+                                  Done  nr -> Done nr
+                                  Error s  -> Error s
+                           else OK w r
+
 stmts :: [Stmt] -> Defs -> World -> Robot -> Result
 stmts []     d w r = OK w r
 stmts (s:ss) d w r = case stmt s d w r of
