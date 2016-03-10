@@ -113,5 +113,13 @@ ancestor(X,Y) :- parent(X,P), ancestor(P,Y).
 % Part 2. Language implementation (see course web page)
 %%
 
+
 cmd(add, [X,Y|S], SN) :- N is X+Y, cmd(N, S, SN), !.
+cmd(lte, [X,Y|S], SN) :- X =< Y, cmd(t, S, SN), !.
+cmd(lte, [X,Y|S], SN) :- X > Y, cmd(f, S, SN), !.
+cmd(if(A,_), [t|S], SN) :- prog(A, S, SN), !.
+cmd(if(_,B), [f|S], SN) :- prog(B, S, SN), !.
 cmd(C, S, [C|S]).
+
+prog([C|CS],S1,S2) :- cmd(C, S1, S3), prog(CS, S3, S2).
+prog([],S,S).
