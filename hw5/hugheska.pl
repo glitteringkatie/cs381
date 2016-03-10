@@ -113,3 +113,5 @@ ancestor(X,Y) :- parent(X,P), ancestor(P,Y).
 % Part 2. Language implementation (see course web page)
 %%
 
+cmd(add, [X,Y|S], SN) :- N is X+Y, cmd(N, S, SN), !.
+cmd(C, S, [C|S]).
