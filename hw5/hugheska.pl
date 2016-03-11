@@ -1,3 +1,7 @@
+% Katie Hughes
+% Andrea Baldwin
+% Mikky Cecil
+
 % Here are a bunch of facts describing the Simpson's family tree.
 % Don't change them!
 
